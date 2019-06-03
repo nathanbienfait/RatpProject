@@ -15,6 +15,7 @@ public class Station {
     private String type;
     private boolean isHub;
     private int[][] routes;
+    private ArrayList<Station> neighbours = new ArrayList<Station>();
 
     public ArrayList<Station> getNeighbours() {
         return neighbours;
@@ -23,8 +24,6 @@ public class Station {
     public void setNeighbours(ArrayList<Station> neighbours) {
         this.neighbours = neighbours;
     }
-
-    private ArrayList<Station> neighbours;
 
     public String getCommune() {
         return commune;

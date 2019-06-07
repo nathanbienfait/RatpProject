@@ -1,6 +1,7 @@
 package search;
 
 import graph.Graph;
+import graph.Neighbor;
 import graph.Node;
 import graph.Station;
 import helpers.Calculator;
@@ -26,11 +27,11 @@ public class Search {
 
             if (!visited.contains(node.getStation())) {
                 visited.add(node.getStation());
-                List<Station> neighbors = node.getStation().getNeighbors();
-                for (Station neighbor : neighbors) {
+                List<Neighbor> neighbors = node.getStation().getNeighbors();
+                for (Neighbor neighbor : neighbors) {
                     ArrayList<Station> currentPath = new ArrayList<>(node.getPath());
-                    currentPath.add(neighbor);
-                    fringe.add(new Node(neighbor, currentPath, 0));
+                    currentPath.add(neighbor.getStation());
+                    fringe.add(new Node(neighbor.getStation(), currentPath, 0));
                 }
             }
         }
@@ -55,12 +56,16 @@ public class Search {
 
             if (!visited.contains(node.getStation())) {
                 visited.add(node.getStation());
-                List<Station> neighbors = node.getStation().getNeighbors();
-                for (Station neighbor : neighbors) {
+                List<Neighbor> neighbors = node.getStation().getNeighbors();
+                for (Neighbor neighbor : neighbors) {
                     ArrayList<Station> currentPath = new ArrayList<>(node.getPath());
-                    currentPath.add(neighbor);
-                    double cost = Calculator.distanceBetweenStations(node.getStation(),neighbor) + node.getCost();
-                    fringe.add(new Node(neighbor, currentPath, cost));
+                    currentPath.add(neighbor.getStation());
+                    double cost = Calculator.distanceBetweenStations(node.getStation(),neighbor.getStation()) + node.getCost();
+                    if(neighbor.getType().equals("corresp")){
+                        cost+=1000;
+                    }
+
+                    fringe.add(new Node(neighbor.getStation(), currentPath, cost));
                 }
             }
         }

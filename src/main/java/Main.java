@@ -11,7 +11,7 @@ public class Main {
 
         Search s = new Search();
 
-        Displayer.stationList(s.dijkstra(g.getStations().get("1907"), g.getStations().get("1874")));
+        Displayer.stationList(s.dijkstra(g.getStations().get("1907"), g.getStations().get("1889")));
 
     }
 }

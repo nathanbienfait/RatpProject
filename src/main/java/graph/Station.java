@@ -15,13 +15,13 @@ public class Station {
     private String type;
     private boolean isHub;
     private int[][] routes;
-    private ArrayList<Station> neighbors = new ArrayList<Station>();
+    private ArrayList<Neighbor> neighbors = new ArrayList<>();
 
-    public ArrayList<Station> getNeighbors() {
+    public ArrayList<Neighbor> getNeighbors() {
         return neighbors;
     }
 
-    public void setNeighbors(ArrayList<Station> neighbors) {
+    public void setNeighbors(ArrayList<Neighbor> neighbors) {
         this.neighbors = neighbors;
     }
 

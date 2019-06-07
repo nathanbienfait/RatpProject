@@ -9,8 +9,10 @@ import helpers.Calculator;
 import java.util.*;
 
 public class Search {
+
+
     @SuppressWarnings("Duplicates")
-    public List<Station> bfs(Station initialState, Station goalState) {
+    public Node bfs(Station initialState, Station goalState) {
         List<Station> visited = new ArrayList<>();
         Queue<Node> fringe = new LinkedList<>();
 
@@ -23,7 +25,7 @@ public class Search {
         while (!fringe.isEmpty()) {
             Node node = fringe.remove();
             if (node.getStation() == goalState)
-                return node.getPath();
+                return node;
 
             if (!visited.contains(node.getStation())) {
                 visited.add(node.getStation());
@@ -35,11 +37,11 @@ public class Search {
                 }
             }
         }
-        return new ArrayList<>();
+        return null;
     }
 
     @SuppressWarnings("Duplicates")
-    public List<Station> dijkstra(Station initialState, Station goalState) {
+    public Node dijkstra(Station initialState, Station goalState) {
         List<Station> visited = new ArrayList<>();
         ArrayList<Node> fringe = new ArrayList<>();
 
@@ -52,7 +54,7 @@ public class Search {
         while (!fringe.isEmpty()) {
             Node node = getNextNode(fringe);
             if (node.getStation() == goalState)
-                return node.getPath();
+                return node;
 
             if (!visited.contains(node.getStation())) {
                 visited.add(node.getStation());
@@ -60,16 +62,16 @@ public class Search {
                 for (Neighbor neighbor : neighbors) {
                     ArrayList<Station> currentPath = new ArrayList<>(node.getPath());
                     currentPath.add(neighbor.getStation());
-                    double cost = Calculator.distanceBetweenStations(node.getStation(),neighbor.getStation()) + node.getCost();
-                    if(neighbor.getType().equals("corresp")){
-                        cost+=1000;
+                    double cost = Calculator.distanceBetweenStations(node.getStation(), neighbor.getStation()) + node.getCost();
+                    if (neighbor.getType().equals("corresp")) {
+                        cost += 1000;
                     }
 
                     fringe.add(new Node(neighbor.getStation(), currentPath, cost));
                 }
             }
         }
-        return new ArrayList<>();
+        return null;
     }
 
     public Node getNextNode(ArrayList<Node> fringe) {
@@ -86,15 +88,44 @@ public class Search {
 
     }
 
-    /*public List<Station> findDiameterBfs(Graph graph){
-        TreeMap<Float, List<Node>> treeMap = new TreeMap<>();
-        for(Map.Entry<String,Station> station : graph.getStations().entrySet()){
-            for(Map.Entry<String,Station> station2 : graph.getStations().entrySet()){
-                List<Node> listStation = bfs(station.getValue(),station2.getValue());
-                treeMap.put(listStation.get(listStation.size()-1).get,bfs(station.getValue(),station2.getValue()));
+    public Node findDiameterBfs(Graph graph) {
+        ArrayList<Station> li = new ArrayList<>();
+        li.add(graph.getStations().get(0));
+        Node diameter = new Node(graph.getStations().get(0), li, 0);
+        for (Map.Entry<String, Station> station : graph.getStations().entrySet()) {
+            for (Map.Entry<String, Station> station2 : graph.getStations().entrySet()) {
+                Node node = bfs(station.getValue(), station2.getValue());
+                try {
+                    if (diameter.getPath().size() < node.getPath().size()) {
+                        diameter = node;
+                    }
+                } catch (NullPointerException e) {
+
+                }
             }
 
         }
-    }*/
+        return diameter;
+    }
+
+    public Node findDiameterDijkstra(Graph graph) {
+        ArrayList<Station> li = new ArrayList<>();
+        li.add(graph.getStations().get(0));
+        Node diameter = new Node(graph.getStations().get(0), li, 0);
+        for (Map.Entry<String, Station> station : graph.getStations().entrySet()) {
+            for (Map.Entry<String, Station> station2 : graph.getStations().entrySet()) {
+                Node node = dijkstra(station.getValue(), station2.getValue());
+                try {
+                    if (diameter.getPath().size() < node.getPath().size()) {
+                        diameter = node;
+                    }
+                } catch (NullPointerException e) {
+
+                }
+            }
+
+        }
+        return diameter;
+    }
 
 }

@@ -116,7 +116,7 @@ public class Search {
             for (Map.Entry<String, Station> station2 : graph.getStations().entrySet()) {
                 Node node = dijkstra(station.getValue(), station2.getValue());
                 try {
-                    if (diameter.getPath().size() < node.getPath().size()) {
+                    if (diameter.getCost() < node.getCost()) {
                         diameter = node;
                     }
                 } catch (NullPointerException e) {

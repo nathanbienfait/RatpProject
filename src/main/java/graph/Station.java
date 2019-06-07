@@ -15,14 +15,14 @@ public class Station {
     private String type;
     private boolean isHub;
     private int[][] routes;
-    private ArrayList<Station> neighbours = new ArrayList<Station>();
+    private ArrayList<Station> neighbors = new ArrayList<Station>();
 
-    public ArrayList<Station> getNeighbours() {
-        return neighbours;
+    public ArrayList<Station> getNeighbors() {
+        return neighbors;
     }
 
-    public void setNeighbours(ArrayList<Station> neighbours) {
-        this.neighbours = neighbours;
+    public void setNeighbors(ArrayList<Station> neighbors) {
+        this.neighbors = neighbors;
     }
 
     public String getCommune() {

@@ -5,7 +5,13 @@ import java.util.ArrayList;
 public class Node {
     private Station station;
     private ArrayList<Station> path;
-    private int cost;
+    private double cost;
+
+    public Node(Station station, ArrayList<Station> path, double cost) {
+        this.station = station;
+        this.path = path;
+        this.cost = cost;
+    }
 
     public Station getStation() {
         return station;
@@ -23,11 +29,11 @@ public class Node {
         this.path = path;
     }
 
-    public int getCost() {
+    public double getCost() {
         return cost;
     }
 
-    public void setCost(int cost) {
+    public void setCost(double cost) {
         this.cost = cost;
     }
 }

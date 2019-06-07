@@ -4,6 +4,8 @@ import graph.Node;
 import graph.Station;
 
 import static java.lang.Math.abs;
+import static java.lang.Math.pow;
+import static java.lang.StrictMath.sqrt;
 
 public class Calculator {
 
@@ -27,4 +29,5 @@ public class Calculator {
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         return R * c * 1000; // convert to meters
     }
+
 }

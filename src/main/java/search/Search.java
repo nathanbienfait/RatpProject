@@ -33,6 +33,7 @@ public class Search {
                 for (Neighbor neighbor : neighbors) {
                     ArrayList<Station> currentPath = new ArrayList<>(node.getPath());
                     currentPath.add(neighbor.getStation());
+                    neighbor.setCounter(neighbor.getCounter()+1);
                     fringe.add(new Node(neighbor.getStation(), currentPath, 0));
                 }
             }
@@ -62,7 +63,7 @@ public class Search {
                 for (Neighbor neighbor : neighbors) {
                     ArrayList<Station> currentPath = new ArrayList<>(node.getPath());
                     currentPath.add(neighbor.getStation());
-                    double cost = Calculator.distanceBetweenStations(node.getStation(), neighbor.getStation()) + node.getCost();
+                    double cost = neighbor.getDistance() + node.getCost();
                     if (neighbor.getType().equals("corresp")) {
                         cost += 1000;
                     }
@@ -128,4 +129,22 @@ public class Search {
         return diameter;
     }
 
+    public Neighbor findCluster(Graph graph){
+        Neighbor finalNeighbor = new Neighbor(null, null, null,0);
+        for(Map.Entry<String, Station> station : graph.getStations().entrySet()){
+            for (Map.Entry<String, Station> station2 : graph.getStations().entrySet()) {
+                Node node = bfs(station.getValue(),station2.getValue());
+                try{
+                    for(Neighbor neighbor : node.getStation().getNeighbors()){
+                        if(finalNeighbor.getCounter()<neighbor.getCounter())
+                            finalNeighbor=neighbor;
+                    }
+                }catch (NullPointerException e){
+
+                }
+
+            }
+        }
+        return finalNeighbor;
+    }
 }

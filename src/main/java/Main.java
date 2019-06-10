@@ -25,12 +25,12 @@ public class Main {
 
         System.out.println("----Diameter of the graph using BFS----");
         Node diameterBfs = search.findDiameterBfs(graph);
-        Displayer.stationList(diameterBfs.getPath());
+        Displayer.stationListWithSubPath(diameterBfs.getPath());
         System.out.println("Number of nodes : "+diameterBfs.getPath().size());
 
         System.out.println("----Diameter of the graph using Dijkstra----");
         Node diameterDijkstra = search.findDiameterDijkstra(graph);
-        Displayer.stationList(diameterDijkstra.getPath());
+        Displayer.stationListWithSubPath(diameterDijkstra.getPath());
         System.out.println("Number of nodes : "+diameterDijkstra.getPath().size());
         System.out.println("Distance in meters : "+diameterDijkstra.getCost());
 

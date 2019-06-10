@@ -14,7 +14,7 @@ public class Main {
         Graph graph = Parser.JsonParser("./src/main/resources/data.json");
         Search search = new Search();
 
-        Station initalStation = graph.getStations().get("1907");
+        Station initalStation = graph.getStations().get("A_1670");
         Station goalStation = graph.getStations().get("1889");
 
         System.out.println("----Path from "+initalStation.getNom()+" to "+goalStation.getNom()+" using BFS----");

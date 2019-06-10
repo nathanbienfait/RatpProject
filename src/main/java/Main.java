@@ -11,20 +11,36 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        Graph g = Parser.JsonParser("./src/main/resources/data.json");
-        System.out.println("parsed");
-        Search s = new Search();
+        Graph graph = Parser.JsonParser("./src/main/resources/data.json");
+        Search search = new Search();
 
-        //Displayer.stationList(s.dijkstra(g.getStations().get("1907"), g.getStations().get("1889")).getPath());
-        /*Node l = s.findDiameterDijkstra(g);
-        Displayer.stationList(l.getPath());
-        System.out.println(l.getPath().size());
-        System.out.println(l.getCost());*/
-        Neighbor l = s.findCluster(g);
+        Station initalStation = graph.getStations().get("1907");
+        Station goalStation = graph.getStations().get("1889");
 
-        System.out.println(l.getCounter());
-        System.out.println(l.getFrom().getNom());
-        System.out.println(l.getStation().getNom());
+        System.out.println("----Path from "+initalStation.getNom()+" to "+goalStation.getNom()+" using BFS----");
+        Displayer.stationList(search.bfs(initalStation, goalStation).getPath());
+
+        System.out.println("----Path from "+initalStation.getNom()+" to "+goalStation.getNom()+" using Dijkstra----");
+        Displayer.stationList(search.dijkstra(initalStation, goalStation).getPath());
+
+        System.out.println("----Diameter of the graph using BFS----");
+        Node diameterBfs = search.findDiameterBfs(graph);
+        Displayer.stationList(diameterBfs.getPath());
+        System.out.println("Number of nodes : "+diameterBfs.getPath().size());
+
+        System.out.println("----Diameter of the graph using Dijkstra----");
+        Node diameterDijkstra = search.findDiameterDijkstra(graph);
+        Displayer.stationList(diameterDijkstra.getPath());
+        System.out.println("Number of nodes : "+diameterDijkstra.getPath().size());
+        System.out.println("Distance in meters : "+diameterDijkstra.getCost());
+
+
+
+
+        System.out.println("----Edge with highest betweenness----");
+        Neighbor cluster = search.findCluster(graph);
+        System.out.println("Counter : "+cluster.getCounter());
+        System.out.println("Edge from "+cluster.getFrom().getNom()+" to "+cluster.getStation().getNom());
 
     }
 }
